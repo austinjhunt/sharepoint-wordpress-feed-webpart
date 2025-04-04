@@ -5,7 +5,7 @@ import styles from "./WordPressRssFeed.module.scss";
 const ReadMoreLink: React.FC<IReadMoreLink> = ({ linkText, linkUrl, linkNewTab }) => {
   return (
     <div className={styles.flexBoxJustifyEnd}>
-      <Link target={linkNewTab ? "_target" : ""} primary={false} text={linkText} href={linkUrl}>
+      <Link target={linkNewTab ? "_blank" : ""} primary={false} text={linkText} href={linkUrl}>
         {linkText}
       </Link>
     </div>
