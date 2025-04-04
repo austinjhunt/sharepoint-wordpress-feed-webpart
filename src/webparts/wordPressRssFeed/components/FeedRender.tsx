@@ -7,6 +7,15 @@ import { readMoreLinkNotEmpty } from "../util";
 import ReadMoreLink from "./ReadMoreLink";
 
 const FeedRender: React.FC<IFeedRenderProps> = ({ title, description, readMoreLink, url, posts, layoutType }) => {
+  console.log("Feed render: ");
+  console.log({
+    url,
+    title,
+    description,
+    readMoreLink,
+    layoutType,
+    posts,
+  });
   return (
     <div>
       {title.trim() !== "" && <h1 className={styles.feedTitle}>{title}</h1>}
@@ -16,7 +25,7 @@ const FeedRender: React.FC<IFeedRenderProps> = ({ title, description, readMoreLi
       ) : (
         <PostsLayout url={url} posts={posts} layoutType={layoutType} />
       )}
-      {readMoreLinkNotEmpty(readMoreLink) && <ReadMoreLink {...readMoreLink} />}
+      {readMoreLink.include && readMoreLinkNotEmpty(readMoreLink) && <ReadMoreLink {...readMoreLink} />}
     </div>
   );
 };
