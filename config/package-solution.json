@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "sharepoint-wordpress-rss-feed-client-side-solution",
+    "name": "SPFx WordPress RSS Feed",
     "id": "cb04c1be-2cd9-44aa-aadb-2565f1760c25",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
