@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "21.7.1",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.24.0"
+    },
+    "version": "1.20.0",
+    "libraryName": "sharepoint-wordpress-rss-feed",
+    "libraryId": "cb04c1be-2cd9-44aa-aadb-2565f1760c25",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "sharepoint-wordpress-rss-feed",
+    "solutionShortDescription": "sharepoint-wordpress-rss-feed description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}
