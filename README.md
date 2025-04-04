@@ -27,13 +27,23 @@ Once the Web Part is added to a page:
 9. Use Clear Filters to reset everything.
 
 ## 📸 Demo Screenshots
-![Enter site URL](./doc/img/enter-site-url.png)
+### Basic Settings (feed title, description, link)
+![Basic settings](./doc/img/basic-settings.png)
 
-![Site connected successfully - all settings](./doc/img/site-connected.png)
+### WordPress Site URL (to pull the feed)
+![Provide WordPress Site URL](./doc/img/site-url.png)
 
-![List preview](./doc/img/list-preview.png)
+### Connect to the site and fetch its info (tags, categories, etc.). Choose feed settings.
+![Connect to site](./doc/img/connected.png)
 
-![Grid preview](./doc/img/grid-preview.png)
+###  Save those settings!
+![Settings saved](./doc/img/settings-saved.png)
+
+###  View your feed! 
+![Feed preview](./doc/img/preview-1.png)
+
+### Test your link if you configured one!
+![Test your read more link](./doc/img/preview-link.png)
 
 ## Used SharePoint Framework Version
 
