@@ -22,21 +22,14 @@ const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({
   const updatePosts = () => {
     fetchPosts(url, feedSettings)
       .then((posts) => {
-        console.log("posts from api");
-        console.log(posts);
         setPosts(posts);
-        console.log("updating posts to");
-        console.log(posts);
       })
       .catch((e) => {
-        console.error("FAILED2");
         console.error(e);
       });
   };
 
   useEffect(() => {
-    console.log(`url: ${url}`);
-    console.log("feedSettings: ", feedSettings);
     if (validateUrl(url) && feedSettings) {
       updatePosts();
     }

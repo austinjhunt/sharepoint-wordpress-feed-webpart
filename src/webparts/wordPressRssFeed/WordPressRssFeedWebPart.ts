@@ -40,7 +40,6 @@ export default class WordPressRssFeedWebPart extends BaseClientSideWebPart<IWord
   }
 
   private loadSiteDataFromURL: () => Promise<void> = async () => {
-    console.log(`load site data from url`, this.properties.url);
     const apiBase = this.properties.url;
     const [general, tags, categories] = await Promise.all([
       fetch(`${apiBase}/wp-json`).then((res) => res.json()),
