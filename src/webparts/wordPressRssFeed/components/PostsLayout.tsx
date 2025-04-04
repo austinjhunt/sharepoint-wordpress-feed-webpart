@@ -1,11 +1,11 @@
 import * as React from "react";
 import styles from "./WordPressRssFeed.module.scss";
 import Post from "./Post";
-import { Post as PostProps } from "../interfaces";
+import { IPost } from "../interfaces";
 
 interface PostsLayoutProps {
   url: string;
-  posts: Array<PostProps>;
+  posts: Array<IPost>;
   layoutType: "grid" | "list";
 }
 

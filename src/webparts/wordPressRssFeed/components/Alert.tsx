@@ -6,8 +6,12 @@ interface AlertProps {
   type: "success" | "warning" | "error";
 }
 const MESSAGES = {
+  ERROR: {
+    failedSaveSettings: "Failed to save settings. Please try modifying your settings and resaving.",
+  },
   SUCCESS: {
     connectedToSite: "Connected to site",
+    savedSettings: "Settings saved successfully.",
   },
   WARNING: {
     noPostsToDisplay: "There are no posts to display currently",

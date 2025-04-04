@@ -1,5 +1,7 @@
 import { IDropdownOption } from "@fluentui/react";
-interface Post {
+import { DisplayMode } from "@microsoft/sp-core-library";
+
+interface IPost {
   id: number;
   title: { rendered: string };
   excerpt: { rendered: string };
@@ -12,13 +14,12 @@ interface Post {
   date: string;
   layoutType?: "grid" | "list"; // Optional layoutType prop
 }
-
-interface TagOrCategory {
+interface ITagOrCategory {
   id: number;
   name: string;
 }
 
-interface SiteInfo {
+interface ISiteInfo {
   tags: IDropdownOption[];
   categories: IDropdownOption[];
   name: string;
@@ -26,7 +27,7 @@ interface SiteInfo {
   url: string;
 }
 
-interface WordPressFeedSettings {
+interface IWordPressFeedSettings {
   numPosts: number;
   pastDays: number;
   postPattern: string;
@@ -36,7 +37,7 @@ interface WordPressFeedSettings {
   layoutType: "list" | "grid";
 }
 
-interface MediaItem {
+interface IMediaItem {
   title: {
     rendered: string;
   };
@@ -48,4 +49,43 @@ interface MediaItem {
     height: number;
   };
 }
-export { Post, TagOrCategory, SiteInfo, WordPressFeedSettings, MediaItem };
+
+interface IReadMoreLink {
+  linkUrl: string;
+  linkText: string;
+  linkNewTab: boolean;
+}
+
+interface IWordPressRssFeedWebPartProps {
+  displayMode?: DisplayMode; // not required for read mode
+  title?: string;
+  description?: string;
+  readMoreLink: IReadMoreLink;
+  siteInfo?: ISiteInfo | undefined; // not required for read mode
+  feedSettings: IWordPressFeedSettings;
+  url: string;
+  // ✅ This line allows dynamic string indexing
+  // so we can pass an updateProperty function to
+  // our ReactElement for edit mode
+  [key: string]: any;
+}
+
+interface IFeedRenderProps {
+  title: string;
+  description: string;
+  readMoreLink: IReadMoreLink;
+  url: string;
+  posts: Array<IPost>;
+  layoutType: "grid" | "list";
+}
+
+export {
+  IFeedRenderProps,
+  IReadMoreLink,
+  IWordPressRssFeedWebPartProps,
+  IPost,
+  ITagOrCategory,
+  ISiteInfo,
+  IWordPressFeedSettings,
+  IMediaItem,
+};

@@ -2,18 +2,31 @@ import * as React from "react";
 import { MouseEventHandler } from "react";
 import styles from "./WordPressRssFeed.module.scss";
 import { TextField, Dropdown, PrimaryButton, BaseButton } from "@fluentui/react";
-import DEFAULTS from "../defaults";
-import { SiteInfo, WordPressFeedSettings } from "../interfaces";
+import { DEFAULTS } from "../defaults";
+import { ISiteInfo, IWordPressFeedSettings } from "../interfaces";
 import SiteSummary from "./SiteSummary";
 import { filterJoinOperators, layouts } from "../dropdownOptions";
+import { Alert, MESSAGES } from "./Alert";
 
-const FeedSettings: (
-  feedSettings: WordPressFeedSettings,
-  setFeedSettings: React.Dispatch<React.SetStateAction<WordPressFeedSettings>>,
-  siteInfo: SiteInfo,
-  updateFeedHandler: MouseEventHandler<BaseButton>,
-  clearFiltersHandler: MouseEventHandler<BaseButton>,
-) => JSX.Element = (feedSettings, setFeedSettings, siteInfo, updateFeedHandler, clearFiltersHandler) => {
+interface IFeedSettingsForm {
+  feedSettings: IWordPressFeedSettings;
+  setFeedSettings: React.Dispatch<React.SetStateAction<IWordPressFeedSettings>>;
+  siteInfo: ISiteInfo;
+  updateFeedHandler: MouseEventHandler<BaseButton>;
+  clearSettingsHandler: MouseEventHandler<BaseButton>;
+  saveSettingsHandler: MouseEventHandler<BaseButton>;
+  saveSettingsResponse: string;
+}
+
+const FeedSettingsForm: React.FC<IFeedSettingsForm> = ({
+  feedSettings,
+  setFeedSettings,
+  siteInfo,
+  updateFeedHandler,
+  clearSettingsHandler,
+  saveSettingsHandler,
+  saveSettingsResponse,
+}) => {
   return (
     <>
       {SiteSummary(siteInfo)}
@@ -127,12 +140,22 @@ const FeedSettings: (
           }
         }}
       />
-      <div className={styles.flexButtonContainer}>
-        <PrimaryButton text="Apply" onClick={updateFeedHandler} />
-        <PrimaryButton text="Clear Filters" onClick={clearFiltersHandler} />
+      <div className={styles.flexW100Container}>
+        <PrimaryButton text="Preview" onClick={updateFeedHandler} />
+        <PrimaryButton text="Save Settings" onClick={saveSettingsHandler} />
+        <PrimaryButton text="Clear Settings" onClick={clearSettingsHandler} />
+
+        {saveSettingsResponse !== "" && (
+          <div className={styles.flexBasisFull}>
+            <Alert
+              msg={saveSettingsResponse}
+              type={saveSettingsResponse === MESSAGES.SUCCESS.savedSettings ? "success" : "error"}
+            />
+          </div>
+        )}
       </div>
     </>
   );
 };
 
-export default FeedSettings;
+export default FeedSettingsForm;

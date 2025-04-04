@@ -6,6 +6,7 @@ interface WarningProps {
 }
 
 const WARNINGS = {
+  cannotDisplayFeed: "Unable to display news feed",
   noPostsToDisplay: "There are no posts to display currently",
   provideSiteUrl: "Please provide a valid site URL.",
   failedSiteInfoFetch: "Failed to fetch site information. Please try updating your site URL.",

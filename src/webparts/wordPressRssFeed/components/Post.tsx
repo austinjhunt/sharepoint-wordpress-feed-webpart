@@ -1,12 +1,12 @@
 import * as React from "react";
 import styles from "./WordPressRssFeed.module.scss";
-import { MediaItem, Post as PostProps } from "../interfaces";
+import { IMediaItem, IPost } from "../interfaces";
 
-const Post: React.FC<PostProps> = ({ id, mediaUrl, title, date, link, author, excerpt, layoutType }) => {
-  const [media, setMedia] = React.useState<MediaItem | null>(null);
+const Post: React.FC<IPost> = ({ id, mediaUrl, title, date, link, author, excerpt, layoutType }) => {
+  const [media, setMedia] = React.useState<IMediaItem | undefined>(undefined);
 
   // image not included in posts json response; need to fetch media for each post
-  const getMediaData: () => Promise<MediaItem | null> = async () => {
+  const getMediaData: () => Promise<IMediaItem | undefined> = async () => {
     const response = await fetch(mediaUrl);
     const data = await response.json();
     if (data.length > 0) {
@@ -16,7 +16,7 @@ const Post: React.FC<PostProps> = ({ id, mediaUrl, title, date, link, author, ex
         media_details: data[0].media_details,
       };
     }
-    return null;
+    return undefined;
   };
   React.useEffect(() => {
     if (mediaUrl) {

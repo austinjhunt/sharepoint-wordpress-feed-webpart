@@ -1,10 +1,39 @@
 # sharepoint-wordpress-rss-feed
 
-## Summary
+This SharePoint Framework (SPFx) Web Part allows you to fetch and display posts from a WordPress site's RSS feed using the WordPress REST API. Users can filter posts by tags, categories, post title patterns, and date ranges. This component is ideal for SharePoint environments that need to embed dynamic blog content from a WordPress site.
 
-Short summary on functionality and used technologies.
+## ✨ Features
 
-[picture of the solution in action, if possible]
+- 🔗 Connect to any WordPress site URL
+- 🏷️ Filter posts by tags and categories
+- 📆 Limit posts by date range (e.g., last 7 days)
+- 🔍 Filter post titles with regular expressions (wildcard matching)
+- ⚖️ Combine filters using `AND` / `OR` logic
+- 🔄 Refresh feed and clear feed settings with one click
+- 📃 Fully integrated with Fluent UI for a responsive SharePoint look and feel
+
+
+## 🛠️ Usage
+Once the Web Part is added to a page:
+
+1. Enter your WordPress site URL (e.g. https://example.com)
+2. Fetch site information (will fail if feed is not available). Once site information is fetched you can:
+3. Set limits: # posts, # days back
+4. Select desired tags or categories to filter by. **These are multiselect dropdowns populated from your site's available tags and categories.**
+5. Optionally enter a regular expression to filter post titles. 
+6. Choose AND or OR to define how tag/category filters combine.
+7. Choose your layout: List | Grid -- **Note here that images will only display if the parent post has associated media**
+8. Click Update Feed.
+9. Use Clear Filters to reset everything.
+
+## 📸 Demo Screenshots
+![Enter site URL](./doc/img/enter-site-url.png)
+
+![Site connected successfully - all settings](./doc/img/site-connected.png)
+
+![List preview](./doc/img/list-preview.png)
+
+![Grid preview](./doc/img/grid-preview.png)
 
 ## Used SharePoint Framework Version
 
@@ -19,55 +48,40 @@ Short summary on functionality and used technologies.
 
 ## Prerequisites
 
-> Any special pre-requisites?
+### For using: 
+
+> Have a Wordpress site in mind that allows access to the /wp-json path for RSS feed consumption
+> Have a SharePoint Online site
+
+### For developing:  
+
+- [Node.js (LTS version)](https://nodejs.org/)
+- [Yeoman and SPFx Generator](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-development-environment)
+- SharePoint Online Developer site (or compatible local workbench)
 
 ## Solution
 
 | Solution    | Author(s)                                               |
 | ----------- | ------------------------------------------------------- |
-| folder name | Author details (name, company, twitter alias with link) |
+| sharepoint-wordpress-rss-feed | Austin Hunt, austinjhunt.com |
 
 ## Version history
 
 | Version | Date             | Comments        |
-| ------- | ---------------- | --------------- |
-| 1.1     | March 10, 2021   | Update comment  |
-| 1.0     | January 29, 2021 | Initial release |
+| ------- | ---------------- | --------------- | 
+| 1.0     | April 03, 2025 | Initial release |
 
 ## Disclaimer
 
 **THIS CODE IS PROVIDED _AS IS_ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
 
 ---
-
-## Minimal Path to Awesome
-
+ 
+## Further Development
 - Clone this repository
 - Ensure that you are at the solution folder
 - in the command-line run:
   - **npm install**
-  - **gulp serve**
+  - **gulp serve** 
 
-> Include any additional steps as needed.
-
-## Features
-
-Description of the extension that expands upon high-level summary above.
-
-This extension illustrates the following concepts:
-
-- topic 1
-- topic 2
-- topic 3
-
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
-
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
-
-## References
-
-- [Getting started with SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-- [Building for Microsoft teams](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/build-for-teams-overview)
-- [Use Microsoft Graph in your solution](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/using-microsoft-graph-apis)
-- [Publish SharePoint Framework applications to the Marketplace](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/publish-to-marketplace-overview)
-- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) - Guidance, tooling, samples and open-source controls for your Microsoft 365 development
+ 

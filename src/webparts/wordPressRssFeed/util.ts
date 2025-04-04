@@ -1,6 +1,6 @@
-import { Post as PostProps, TagOrCategory, SiteInfo, WordPressFeedSettings } from "./interfaces";
+import { IPost, ITagOrCategory, ISiteInfo, IWordPressFeedSettings, IReadMoreLink } from "./interfaces";
 
-const fetchPostsWithAndFilters: (url: string, settings: WordPressFeedSettings) => Promise<Array<PostProps>> = async (
+const fetchPostsWithAndFilters: (url: string, settings: IWordPressFeedSettings) => Promise<Array<IPost>> = async (
   url,
   settings,
 ) => {
@@ -14,14 +14,14 @@ const fetchPostsWithAndFilters: (url: string, settings: WordPressFeedSettings) =
       fetchUrl += `&after=${sinceDate.toISOString()}`;
     }
     const response = await fetch(fetchUrl);
-    const data: PostProps[] = await response.json();
+    const data: IPost[] = await response.json();
     return data.filter((post) => new RegExp(settings.postPattern, "i").test(post.title.rendered));
   } catch (error) {
     throw new Error("Error fetching posts: " + error.message);
   }
 };
 
-const fetchPostsWithOrFilters: (url: string, settings: WordPressFeedSettings) => Promise<Array<PostProps>> = async (
+const fetchPostsWithOrFilters: (url: string, settings: IWordPressFeedSettings) => Promise<Array<IPost>> = async (
   url,
   settings,
 ) => {
@@ -32,8 +32,8 @@ const fetchPostsWithOrFilters: (url: string, settings: WordPressFeedSettings) =>
       sinceDate.setDate(sinceDate.getDate() - settings.pastDays);
       fetchUrl += `&after=${sinceDate.toISOString()}`;
     }
-    const withTags: PostProps[] = [];
-    const withCategories: PostProps[] = [];
+    const withTags: IPost[] = [];
+    const withCategories: IPost[] = [];
     let tagsFilterUrl = fetchUrl;
     let categoriesFilterUrl = fetchUrl;
     // get post set matching tags filter
@@ -49,7 +49,7 @@ const fetchPostsWithOrFilters: (url: string, settings: WordPressFeedSettings) =>
       withCategories.push(...(await categoryFilterResponse.json()));
     }
 
-    const dedupedUnion = [...withTags, ...withCategories].reduce<PostProps[]>((accum, post) => {
+    const dedupedUnion = [...withTags, ...withCategories].reduce<IPost[]>((accum, post) => {
       // Check if the post is already in the accumulator based on the post id
       if (!accum.some((item) => item.id === post.id)) {
         accum.push(post); // Add unique post to the accumulator
@@ -63,11 +63,8 @@ const fetchPostsWithOrFilters: (url: string, settings: WordPressFeedSettings) =>
   }
 };
 
-const fetchPosts: (url: string, settings: WordPressFeedSettings) => Promise<Array<PostProps>> = async (
-  url,
-  settings,
-) => {
-  let posts: Array<PostProps> = [];
+const fetchPosts: (url: string, settings: IWordPressFeedSettings) => Promise<Array<IPost>> = async (url, settings) => {
+  let posts: Array<IPost> = [];
   if (!url || url === "") return posts;
   try {
     if (settings.filterJoinOperator === "AND") {
@@ -81,18 +78,18 @@ const fetchPosts: (url: string, settings: WordPressFeedSettings) => Promise<Arra
   }
 };
 
-const fetchSiteInfo: (url: string) => Promise<SiteInfo | undefined> = async (url) => {
+const fetchSiteInfo: (url: string) => Promise<ISiteInfo | undefined> = async (url) => {
   if (!url || !url.trim()) return;
   try {
     const general = await (await fetch(`${url}/wp-json`)).json();
     const tags = await (await fetch(`${url}/wp-json/wp/v2/tags`)).json();
     const categories = await (await fetch(`${url}/wp-json/wp/v2/categories`)).json();
     return {
-      tags: tags.map((tag: TagOrCategory) => ({ key: tag.id, text: tag.name })),
-      categories: categories.map((category: TagOrCategory) => ({ key: category.id, text: category.name })),
+      tags: tags.map((tag: ITagOrCategory) => ({ key: tag.id, text: tag.name })),
+      categories: categories.map((category: ITagOrCategory) => ({ key: category.id, text: category.name })),
       name: general.name,
       description: general.description,
-    } as SiteInfo;
+    } as ISiteInfo;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -107,4 +104,15 @@ const validateUrl: (url: string) => boolean = (url) => {
   return valid;
 };
 
-export { fetchPostsWithAndFilters, fetchPostsWithOrFilters, fetchPosts, validateUrl, fetchSiteInfo };
+const readMoreLinkNotEmpty: (readMoreLink: IReadMoreLink) => boolean = (readMoreLink) => {
+  return readMoreLink && readMoreLink.linkText.trim() !== "" && readMoreLink.linkUrl.trim() !== "";
+};
+
+export {
+  readMoreLinkNotEmpty,
+  fetchPostsWithAndFilters,
+  fetchPostsWithOrFilters,
+  fetchPosts,
+  validateUrl,
+  fetchSiteInfo,
+};

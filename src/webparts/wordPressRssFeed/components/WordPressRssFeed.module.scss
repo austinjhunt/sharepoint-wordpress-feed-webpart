@@ -10,10 +10,18 @@
   }
 }
 
-.flexButtonContainer {
+.flexW100Container {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.flexBoxJustifyEnd {
+  justify-content: end;
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
 }
 .marginYFormField {
   margin-top: 1rem;
@@ -21,6 +29,9 @@
 } 
 .flexBasisFull {
   flex-basis: 100%;
+}
+.flexBasisHalf {
+  flex-basis: 50%;
 }
 
 .alert {
@@ -135,7 +146,7 @@
 
 /* Grid Post Styles */
 .gridPost {
-  width: calc(33.333% - 16px);
+  width: calc(45% - 16px);
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -177,4 +188,11 @@
     margin-right: 0;
     margin-bottom: 10px;
   }
+}
+
+.feedTitle {
+  font-size: medium;
+}
+.feedDescription{
+  font-size: small;
 }
