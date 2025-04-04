@@ -16,7 +16,7 @@ const FeedRender: React.FC<IFeedRenderProps> = ({ title, description, readMoreLi
       ) : (
         <PostsLayout url={url} posts={posts} layoutType={layoutType} />
       )}
-      {readMoreLinkNotEmpty(readMoreLink) && <ReadMoreLink {...readMoreLink} />}
+      {readMoreLink.include && readMoreLinkNotEmpty(readMoreLink) && <ReadMoreLink {...readMoreLink} />}
     </div>
   );
 };

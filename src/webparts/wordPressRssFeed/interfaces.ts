@@ -1,6 +1,3 @@
-import { IDropdownOption } from "@fluentui/react";
-import { DisplayMode } from "@microsoft/sp-core-library";
-
 interface IPost {
   id: number;
   title: { rendered: string };
@@ -17,14 +14,6 @@ interface IPost {
 interface ITagOrCategory {
   id: number;
   name: string;
-}
-
-interface ISiteInfo {
-  tags: IDropdownOption[];
-  categories: IDropdownOption[];
-  name: string;
-  description: string;
-  url: string;
 }
 
 interface IWordPressFeedSettings {
@@ -54,14 +43,13 @@ interface IReadMoreLink {
   linkUrl: string;
   linkText: string;
   linkNewTab: boolean;
+  include: boolean;
 }
 
 interface IWordPressRssFeedWebPartProps {
-  displayMode?: DisplayMode; // not required for read mode
   title?: string;
   description?: string;
   readMoreLink: IReadMoreLink;
-  siteInfo?: ISiteInfo | undefined; // not required for read mode
   feedSettings: IWordPressFeedSettings;
   url: string;
   // ✅ This line allows dynamic string indexing
@@ -85,7 +73,6 @@ export {
   IWordPressRssFeedWebPartProps,
   IPost,
   ITagOrCategory,
-  ISiteInfo,
   IWordPressFeedSettings,
   IMediaItem,
 };

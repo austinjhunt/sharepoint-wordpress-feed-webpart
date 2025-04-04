@@ -4,40 +4,57 @@
  */
 
 import * as React from "react";
-import { DisplayMode } from "@microsoft/sp-core-library";
-import { IWordPressRssFeedWebPartProps } from "../interfaces";
-import DisplayModeEdit from "./DisplayModeEdit";
-import DisplayModeRead from "./DisplayModeRead";
+import { useEffect } from "react";
+import { IPost, IReadMoreLink, IWordPressRssFeedWebPartProps } from "../interfaces";
+import { fetchPosts, validateUrl } from "../util";
+import FeedRender from "./FeedRender";
+import { MESSAGES, Alert } from "./Alert";
 
 const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({
-  displayMode,
   title,
   description,
   readMoreLink,
-  siteInfo,
   feedSettings,
   url,
-  updateProperty,
 }) => {
-  if (displayMode === DisplayMode.Edit) {
-    return DisplayModeEdit({
-      siteInfo,
-      feedSettings,
-      url,
-      updateProperty,
-      title,
-      description,
-      readMoreLink,
-    });
-  } else {
-    return DisplayModeRead({
-      url,
-      title,
-      description,
-      readMoreLink,
-      feedSettings,
-    });
-  }
+  const [posts, setPosts] = React.useState<Array<IPost>>([]);
+
+  const updatePosts = () => {
+    fetchPosts(url, feedSettings)
+      .then((posts) => {
+        setPosts(posts);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  useEffect(() => {
+    if (validateUrl(url) && feedSettings) {
+      updatePosts();
+    }
+  }, [
+    url,
+    feedSettings.filterJoinOperator,
+    feedSettings.numPosts,
+    feedSettings.pastDays,
+    feedSettings.postPattern,
+    feedSettings.categoryIds.length,
+    feedSettings.tagIds.length,
+  ]);
+
+  return url && posts && feedSettings ? (
+    <FeedRender
+      title={title as string}
+      description={description as string}
+      readMoreLink={readMoreLink as IReadMoreLink}
+      url={url as string}
+      posts={posts}
+      layoutType={feedSettings.layoutType}
+    />
+  ) : (
+    <Alert msg={MESSAGES.WARNING.noPostsToDisplay} type={"warning"} />
+  );
 };
 
 export default RSSWebPart;

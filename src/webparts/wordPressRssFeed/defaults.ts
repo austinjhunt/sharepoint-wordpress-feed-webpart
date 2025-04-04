@@ -5,7 +5,6 @@ export const DEFAULTS = {
   numPosts: 10,
   postPattern: "",
   siteUrl: "",
-  siteInfo: undefined,
   tagIds: [],
   categoryIds: [],
   layoutType: "list",
