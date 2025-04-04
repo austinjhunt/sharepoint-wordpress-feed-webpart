@@ -33,7 +33,15 @@ const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({
     if (validateUrl(url) && feedSettings) {
       updatePosts();
     }
-  }, [url, JSON.stringify(feedSettings)]);
+  }, [
+    url,
+    feedSettings.filterJoinOperator,
+    feedSettings.numPosts,
+    feedSettings.pastDays,
+    feedSettings.postPattern,
+    feedSettings.categoryIds.length,
+    feedSettings.tagIds.length,
+  ]);
 
   return url && posts && feedSettings ? (
     <FeedRender
