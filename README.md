@@ -1,4 +1,4 @@
-# sharepoint-wordpress-rss-feed
+# SharePoint Framework (SPFx) WordPress-Specific RSS Feed Web Part
 
 This SharePoint Framework (SPFx) Web Part allows you to fetch and display posts from a WordPress site's RSS feed using the WordPress REST API. Users can filter posts by tags, categories, post title patterns, and date ranges. This component is ideal for SharePoint environments that need to embed dynamic blog content from a WordPress site.
 
