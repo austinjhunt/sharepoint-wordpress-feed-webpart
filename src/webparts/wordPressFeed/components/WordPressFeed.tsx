@@ -1,16 +1,16 @@
 /**
- * SharePoint Framework (SPFx) Web Part to fetch and display a WordPress RSS feed
+ * SharePoint Framework (SPFx) Web Part to fetch and display a WordPress feed
  * with filtering by tag, category, or post name pattern.
  */
 
 import * as React from "react";
 import { useEffect } from "react";
-import { IWordPressPost, IWordPressRssFeedWebPartProps } from "../interfaces";
+import { IWordPressPost, IWordPressFeedWebPartProps } from "../interfaces";
 import { fetchPosts, validateUrl } from "../util";
 import FeedRender from "./FeedRender";
 import { MESSAGES, Alert } from "./Alert";
 
-const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({
+const WordPressFeed: React.FC<IWordPressFeedWebPartProps> = ({
   feedFilterSettings,
   displaySettings,
   colorSettings,
@@ -49,4 +49,4 @@ const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({
   );
 };
 
-export default RSSWebPart;
+export default WordPressFeed;

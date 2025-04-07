@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IReadMoreLink } from "../interfaces";
 import { PrimaryButton } from "@fluentui/react";
-import styles from "./WordPressRssFeed.module.scss";
+import styles from "./WordPressFeed.module.scss";
 import { extractDefaultColor } from "../util";
 const ReadMoreLink: React.FC<IReadMoreLink> = ({ linkText, linkUrl, linkNewTab, colorSettings }) => {
   return (

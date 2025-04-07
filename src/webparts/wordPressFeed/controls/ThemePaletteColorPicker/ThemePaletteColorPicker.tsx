@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IThemePaletteColorPicker } from "./IThemePaletteColorPicker";
 import { Dropdown, IDropdownOption } from "@fluentui/react";
-import styles from "../../components/WordPressRssFeed.module.scss";
+import styles from "../../components/WordPressFeed.module.scss";
 import { extractDefaultColor } from "../../util";
 
 interface IColorPreview {

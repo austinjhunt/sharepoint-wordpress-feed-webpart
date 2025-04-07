@@ -2,17 +2,17 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
   "version": "2.0",
   "bundles": {
-    "word-press-rss-feed-web-part": {
+    "word-press-news-feed-web-part": {
       "components": [
         {
-          "entrypoint": "./lib/webparts/wordPressRssFeed/WordPressRssFeedWebPart.js",
-          "manifest": "./src/webparts/wordPressRssFeed/WordPressRssFeedWebPart.manifest.json"
+          "entrypoint": "./lib/webparts/wordPressFeed/WordPressFeedWebPart.js",
+          "manifest": "./src/webparts/wordPressFeed/WordPressFeedWebPart.manifest.json"
         }
       ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "WordPressRssFeedWebPartStrings": "lib/webparts/wordPressRssFeed/loc/{locale}.js"
+    "WordPressFeedWebPartStrings": "lib/webparts/wordPressFeed/loc/{locale}.js"
   }
 }

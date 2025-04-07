@@ -1,4 +1,4 @@
-declare interface IWordPressRssFeedWebPartStrings {
+declare interface IWordPressFeedWebPartStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
   DescriptionFieldLabel: string;
@@ -13,7 +13,7 @@ declare interface IWordPressRssFeedWebPartStrings {
   UnknownEnvironment: string;
 }
 
-declare module 'WordPressRssFeedWebPartStrings' {
-  const strings: IWordPressRssFeedWebPartStrings;
+declare module "WordPressFeedWebPartStrings" {
+  const strings: IWordPressFeedWebPartStrings;
   export = strings;
 }

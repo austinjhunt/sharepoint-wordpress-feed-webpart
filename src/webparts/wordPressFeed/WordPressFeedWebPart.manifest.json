@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
   "id": "0b10cdde-f3fc-435d-886a-ecc6c86ee8fe",
-  "alias": "WordPressRssFeedWebPart",
+  "alias": "WordPressFeedWebPart",
   "componentType": "WebPart",
 
   "version": "*",
@@ -15,11 +15,13 @@
     {
       "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
       "group": { "default": "Advanced" },
-      "title": { "default": "WordPress RSS Feed" },
-      "description": { "default": "WordPress RSS Feed description" },
+      "title": { "default": "WordPress News Feed" },
+      "description": {
+        "default": "Display a news feed from a target WordPress site by pulling posts from its REST API"
+      },
       "officeFabricIconFontName": "Page",
       "properties": {
-        "description": "WordPress RSS Feed"
+        "description": "WordPress News Feed"
       }
     }
   ]

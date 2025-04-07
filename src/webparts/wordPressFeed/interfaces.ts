@@ -86,7 +86,7 @@ interface IReadMoreLink {
   colorSettings: IColorSettings;
 }
 
-interface IWordPressRssFeedWebPartProps {
+interface IWordPressFeedWebPartProps {
   feedFilterSettings: IWordPressFeedFilterSettings;
   displaySettings: IDisplaySettings;
   colorSettings: IColorSettings;
@@ -186,7 +186,7 @@ export {
   IPagination,
   IFeedRenderProps,
   IReadMoreLink,
-  IWordPressRssFeedWebPartProps,
+  IWordPressFeedWebPartProps,
   IWordPressPost,
   IPostComponent,
   ITagOrCategory,

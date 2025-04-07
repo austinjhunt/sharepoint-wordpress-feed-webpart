@@ -2,7 +2,7 @@ import * as React from "react";
 import { IFeedRenderProps } from "../interfaces";
 import { Alert, MESSAGES } from "./Alert";
 import PostsLayout from "./PostsLayout";
-import styles from "./WordPressRssFeed.module.scss";
+import styles from "./WordPressFeed.module.scss";
 import { readMoreLinkNotEmpty } from "../util";
 import ReadMoreLink from "./ReadMoreLink";
 import { extractDefaultColor } from "../util";
