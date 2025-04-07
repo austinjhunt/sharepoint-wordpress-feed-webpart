@@ -1,66 +1,84 @@
 import * as React from "react";
 import styles from "./WordPressRssFeed.module.scss";
-import { IMediaItem, IPost } from "../interfaces";
+import { IWordPressPostAuthor, IPostComponent, IWordPressMediaItem } from "../interfaces";
+import { Link } from "@fluentui/react";
 
-const Post: React.FC<IPost> = ({ id, mediaUrl, title, date, link, author, excerpt, layoutType }) => {
-  const [media, setMedia] = React.useState<IMediaItem | undefined>(undefined);
-
-  // image not included in posts json response; need to fetch media for each post
-  const getMediaData: () => Promise<IMediaItem | undefined> = async () => {
-    const response = await fetch(mediaUrl);
-    const data = await response.json();
-    if (data.length > 0) {
-      return {
-        title: data[0].title,
-        guid: data[0].guid,
-        media_details: data[0].media_details,
-      };
-    }
-    return undefined;
-  };
+const Post: React.FC<IPostComponent> = ({ post, displaySettings }) => {
+  const [media, setMedia] = React.useState<IWordPressMediaItem | undefined>(undefined);
+  const [author, setAuthor] = React.useState<IWordPressPostAuthor | undefined>(undefined);
+  console.log(post);
   React.useEffect(() => {
-    if (mediaUrl) {
-      getMediaData()
-        .then((m) => setMedia(m))
-        .catch((e) => {
-          // no media
-        });
+    if (post && post._embedded && post._embedded["wp:featuredmedia"] && post._embedded["wp:featuredmedia"].length > 0) {
+      setMedia(post._embedded["wp:featuredmedia"][0]);
     }
-  }, [mediaUrl]);
-  // Extract author details from the post
-  const authorName = author.name;
-  const authorLink = author.url;
-  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+  }, [displaySettings.showMedia, post._embedded["wp:featuredmedia"]?.length, post.id]);
+
+  React.useEffect(() => {
+    if (post && post._embedded && post._embedded.author && post._embedded.author.length > 0) {
+      setAuthor(post._embedded.author[0]);
+    }
+  }, [displaySettings.showAuthor, post?._embedded?.author.length]);
+
+  const authorHasAllData: () => boolean = () => {
+    return (
+      author !== undefined &&
+      author.name !== "" &&
+      author.link !== "" &&
+      author.avatar_urls !== undefined &&
+      author.avatar_urls["24"] !== undefined &&
+      author.avatar_urls["24"] !== ""
+    );
+  };
+
+  const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
   const extractText = (html: string): string => {
     const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent?.slice(0, 200) + "..." || "";
+    return doc.body.textContent?.slice(0, displaySettings.excerptLength) + "..." || "";
+  };
+
+  const mediaHasAllData: () => boolean = () => {
+    return (
+      media !== undefined &&
+      media.id !== undefined &&
+      media.date !== undefined &&
+      media.alt_text !== undefined &&
+      media.source_url !== undefined &&
+      media.caption !== undefined
+    );
   };
 
   return (
-    <article className={layoutType === "grid" ? styles.gridPost : styles.listPost}>
-      {media && (
+    <article className={displaySettings.layoutType === "grid" ? styles.gridPost : styles.listPost}>
+      {displaySettings.showMedia && media && mediaHasAllData() && (
         <img
+          id={media.id.toString()}
           className={styles.thumbnail}
-          src={media.guid.rendered}
+          src={media.source_url}
           alt={media.title.rendered}
           width={media.media_details.width}
           height={media.media_details.height}
         />
       )}
       <div className={styles.content}>
-        <h2 className={styles.title}>{title.rendered}</h2>
-        <div className="meta">
-          <p>
-            Published on {formattedDate} by <a href={authorLink}>{authorName}</a>
-          </p>
-        </div>
+        {post.title && <h2 className={styles.title}>{post.title.rendered}</h2>}
+        {displaySettings.showAuthor && author && authorHasAllData() && (
+          <div className={styles.postAuthorContainer}>
+            <img src={author.avatar_urls?.["24"]} alt={`avatar for ${author.name}`} />
+            <p>
+              Published by{" "}
+              <Link href={author.link} target={"_blank"}>
+                {author.name}
+              </Link>
+            </p>
+          </div>
+        )}
         <p className={styles.date}>{formattedDate}</p>
-        <p className={styles.excerpt}>{extractText(excerpt.rendered)}</p>
-        <a href={link} target="_blank" rel="noopener noreferrer" className={styles.readMore}>
+        {displaySettings.excerptLength !== 0 && <p className={styles.excerpt}>{extractText(post.excerpt.rendered)}</p>}
+        <a href={post.link} target="_blank" rel="noopener noreferrer" className={styles.readMore}>
           Read More →
         </a>
       </div>

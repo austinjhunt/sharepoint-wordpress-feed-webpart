@@ -47,6 +47,8 @@ export class PropertyPaneNumericTextField implements IPropertyPaneField<INumeric
       key: this.properties.key,
       label: this.properties.label,
       value: this.properties.value,
+      min: this.properties.min,
+      max: this.properties.max,
       onChange: this.properties.onChange,
     });
 

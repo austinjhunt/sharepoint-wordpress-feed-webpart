@@ -5,22 +5,16 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-import { IPost, IReadMoreLink, IWordPressRssFeedWebPartProps } from "../interfaces";
+import { IWordPressPost, IWordPressRssFeedWebPartProps } from "../interfaces";
 import { fetchPosts, validateUrl } from "../util";
 import FeedRender from "./FeedRender";
 import { MESSAGES, Alert } from "./Alert";
 
-const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({
-  title,
-  description,
-  readMoreLink,
-  feedSettings,
-  url,
-}) => {
-  const [posts, setPosts] = React.useState<Array<IPost>>([]);
+const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({ feedFilterSettings, displaySettings, url }) => {
+  const [posts, setPosts] = React.useState<Array<IWordPressPost>>([]);
 
-  const updatePosts = () => {
-    fetchPosts(url, feedSettings)
+  const updatePosts: () => void = () => {
+    fetchPosts(url, feedFilterSettings)
       .then((posts) => {
         setPosts(posts);
       })
@@ -30,28 +24,21 @@ const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({
   };
 
   useEffect(() => {
-    if (validateUrl(url) && feedSettings) {
+    if (validateUrl(url) && feedFilterSettings) {
       updatePosts();
     }
   }, [
     url,
-    feedSettings.filterJoinOperator,
-    feedSettings.numPosts,
-    feedSettings.pastDays,
-    feedSettings.postPattern,
-    feedSettings.categoryIds.length,
-    feedSettings.tagIds.length,
+    feedFilterSettings.filterJoinOperator,
+    feedFilterSettings.numPosts,
+    feedFilterSettings.pastDays,
+    feedFilterSettings.postPattern,
+    feedFilterSettings.categoryIds.length,
+    feedFilterSettings.tagIds.length,
   ]);
 
-  return url && posts && feedSettings ? (
-    <FeedRender
-      title={title as string}
-      description={description as string}
-      readMoreLink={readMoreLink as IReadMoreLink}
-      url={url as string}
-      posts={posts}
-      layoutType={feedSettings.layoutType}
-    />
+  return url && posts && feedFilterSettings && displaySettings ? (
+    <FeedRender posts={posts} displaySettings={displaySettings} />
   ) : (
     <Alert msg={MESSAGES.WARNING.noPostsToDisplay} type={"warning"} />
   );

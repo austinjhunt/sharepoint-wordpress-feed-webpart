@@ -3,4 +3,6 @@ export interface INumericTextField {
   value: string;
   onChange?: (newVal: string) => void;
   key: string;
+  min: number;
+  max: number;
 }
