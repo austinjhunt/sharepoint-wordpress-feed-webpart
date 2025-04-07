@@ -3,7 +3,7 @@
   "solution": {
     "name": "SPFx WordPress RSS Feed",
     "id": "cb04c1be-2cd9-44aa-aadb-2565f1760c25",
-    "version": "2.1.0",
+    "version": "2.1.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
