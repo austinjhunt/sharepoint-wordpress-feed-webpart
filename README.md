@@ -11,6 +11,7 @@ This SharePoint Framework (SPFx) Web Part allows you to fetch and display posts 
 - ⚖️ Combine filters using `AND` / `OR` logic
 - 🔄 Refresh feed and clear feed settings with one click
 - 📃 Fully integrated with Fluent UI for a responsive SharePoint look and feel
+- 🖌️ Configure colors of nearly every UI element by choosing from your SharePoint site's theme color palette!
 
 
 ## 🛠️ Usage Demo - Screen Recording
