@@ -10,7 +10,12 @@ import { fetchPosts, validateUrl } from "../util";
 import FeedRender from "./FeedRender";
 import { MESSAGES, Alert } from "./Alert";
 
-const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({ feedFilterSettings, displaySettings, url }) => {
+const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({
+  feedFilterSettings,
+  displaySettings,
+  colorSettings,
+  url,
+}) => {
   const [posts, setPosts] = React.useState<Array<IWordPressPost>>([]);
 
   const updatePosts: () => void = () => {
@@ -38,7 +43,7 @@ const RSSWebPart: React.FC<IWordPressRssFeedWebPartProps> = ({ feedFilterSetting
   ]);
 
   return url && posts && feedFilterSettings && displaySettings ? (
-    <FeedRender posts={posts} displaySettings={displaySettings} />
+    <FeedRender posts={posts} displaySettings={displaySettings} colorSettings={colorSettings} />
   ) : (
     <Alert msg={MESSAGES.WARNING.noPostsToDisplay} type={"warning"} />
   );

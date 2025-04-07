@@ -4,6 +4,7 @@ import { Version } from "@microsoft/sp-core-library";
 import { PropertyPaneTagCategoryPicker } from "./controls/TagCategoryPicker/PropertyPaneTagCategoryPicker";
 import {
   type IPropertyPaneConfiguration,
+  IPropertyPaneDropdownOption,
   PropertyPaneDropdown,
   PropertyPaneTextField,
   PropertyPaneToggle,
@@ -12,22 +13,26 @@ import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
 import WordPressRssFeed from "./components/WordPressRssFeed";
 import { ITagOrCategory, IWordPressRssFeedWebPartProps } from "./interfaces";
-import { defaultDisplaySettings, defaultFeedRequestSettings } from "./defaults";
+import { defaultColorSettings, defaultDisplaySettings, defaultFeedRequestSettings } from "./defaults";
 import { filterJoinOperators, layouts } from "./dropdownOptions";
 import { PropertyPaneWordPressUrlField } from "./controls/WordPressUrlField/PropertyPaneWordPressUrlField";
-import { validateUrl } from "./util";
+import { getColorDropdownOptions, validateUrl } from "./util";
 import { PropertyPaneNumericTextField } from "./controls/NumericTextField/PropertyPaneNumericTextField";
+import { PropertyPaneThemePaletteColorPicker } from "./controls/ThemePaletteColorPicker/PropertyPaneNumericTextField";
+import { IDropdownOption } from "@fluentui/react";
 export default class WordPressRssFeedWebPart extends BaseClientSideWebPart<IWordPressRssFeedWebPartProps> {
   // store data that you need to fetch asynchronously within
   // configuration panel as private variables, and load them
   // onInit.
   private _tagOptions: { key: number; text: string }[] = [];
   private _categoryOptions: { key: number; text: string }[] = [];
+  private _colorOptions: IPropertyPaneDropdownOption[] = [];
   private _siteName: string = "";
   public render(): void {
     const element: React.ReactElement<IWordPressRssFeedWebPartProps> = React.createElement(WordPressRssFeed, {
       displaySettings: this.properties.displaySettings,
       feedFilterSettings: this.properties.feedFilterSettings,
+      colorSettings: this.properties.colorSettings,
       url: this.properties.url,
     });
     ReactDom.render(element, this.domElement);
@@ -55,9 +60,13 @@ export default class WordPressRssFeedWebPart extends BaseClientSideWebPart<IWord
     if (!this.properties.displaySettings) {
       this.properties.displaySettings = defaultDisplaySettings;
     }
+    if (!this.properties.colorSettings) {
+      this.properties.colorSettings = defaultColorSettings;
+    }
     if (validateUrl(this.properties.url)) {
       this.loadSiteDataFromURL().catch((e) => console.error(e));
     }
+    this._colorOptions = getColorDropdownOptions();
     return super.onInit();
   }
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
@@ -169,6 +178,154 @@ export default class WordPressRssFeedWebPart extends BaseClientSideWebPart<IWord
                   value: this.properties.displaySettings.excerptLength.toString(),
                   onChange: (s: string) => {
                     this.properties.displaySettings.excerptLength = parseInt(s);
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+              ],
+            },
+            {
+              groupName: "Color Settings",
+              groupFields: [
+                new PropertyPaneThemePaletteColorPicker("colorSettings.mainBackgroundColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.mainBackgroundColor,
+                  label: "Main Background Color",
+                  key: "colorSettings.mainBackgroundColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.mainBackgroundColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.titleTextColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.titleTextColor,
+                  label: "Title Text Color",
+                  key: "colorSettings.titleTextColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.titleTextColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.descriptionTextColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.descriptionTextColor,
+                  label: "Description Text Color",
+                  key: "colorSettings.descriptionTextColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.descriptionTextColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.postBackgroundColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.postBackgroundColor,
+                  label: "Post Background Color",
+                  key: "colorSettings.postBackgroundColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.postBackgroundColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.postTitleTextColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.postTitleTextColor,
+                  label: "Post Title Text Color",
+                  key: "colorSettings.postTitleTextColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.postTitleTextColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.postBodyTextColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.postBodyTextColor,
+                  label: "Post Body Text Color",
+                  key: "colorSettings.postBodyTextColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.postBodyTextColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.postReadMoreLinkTextColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.postReadMoreLinkTextColor,
+                  label: "Post Read More Link Text Color",
+                  key: "colorSettings.postReadMoreLinkTextColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.postReadMoreLinkTextColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.pageButtonBackgroundColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.pageButtonBackgroundColor,
+                  label: "Page Button Background Color",
+                  key: "colorSettings.pageButtonBackgroundColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.pageButtonBackgroundColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.pageButtonTextColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.pageButtonTextColor,
+                  label: "Page Button Text Color",
+                  key: "colorSettings.pageButtonTextColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.pageButtonTextColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.pageButtonHoverBackgroundColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.pageButtonHoverBackgroundColor,
+                  label: "Page Button Hover Background Color",
+                  key: "colorSettings.pageButtonHoverBackgroundColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.pageButtonHoverBackgroundColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.pageButtonHoverTextColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.pageButtonHoverTextColor,
+                  label: "Page Button Hover Text Color",
+                  key: "colorSettings.pageButtonHoverTextColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.pageButtonHoverTextColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.feedReadMoreButtonBackgroundColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.feedReadMoreButtonBackgroundColor,
+                  label: "(Bottom of feed) Read More Button Background Color",
+                  key: "colorSettings.feedReadMoreButtonBackgroundColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.feedReadMoreButtonBackgroundColor = newSelectedOption.key as string;
+                    this.context.propertyPane.refresh();
+                    this.render();
+                  },
+                }),
+                new PropertyPaneThemePaletteColorPicker("colorSettings.feedReadMoreButtonTextColor", {
+                  options: this._colorOptions,
+                  selectedKey: this.properties.colorSettings.feedReadMoreButtonTextColor,
+                  label: "(Bottom of feed) Read More Button Text Color",
+                  key: "colorSettings.feedReadMoreButtonTextColor",
+                  onChange: (newSelectedOption: IDropdownOption) => {
+                    this.properties.colorSettings.feedReadMoreButtonTextColor = newSelectedOption.key as string;
                     this.context.propertyPane.refresh();
                     this.render();
                   },

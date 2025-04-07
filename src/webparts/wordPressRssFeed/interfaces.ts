@@ -28,16 +28,34 @@ interface IWordPressPost {
 interface IPostsLayout {
   posts: Array<IWordPressPost>;
   displaySettings: IDisplaySettings;
+  colorSettings: IColorSettings;
 }
 
 interface IPostComponent {
   post: IWordPressPost;
   displaySettings: IDisplaySettings;
+  colorSettings: IColorSettings;
 }
 
 interface ITagOrCategory {
   id: number;
   name: string;
+}
+
+interface IColorSettings {
+  mainBackgroundColor: string;
+  titleTextColor: string;
+  descriptionTextColor: string;
+  postBackgroundColor: string;
+  postTitleTextColor: string;
+  postBodyTextColor: string; //excerpt, author, date
+  postReadMoreLinkTextColor: string;
+  pageButtonBackgroundColor: string;
+  pageButtonTextColor: string;
+  pageButtonHoverBackgroundColor: string;
+  pageButtonHoverTextColor: string;
+  feedReadMoreButtonBackgroundColor: string;
+  feedReadMoreButtonTextColor: string;
 }
 
 interface IDisplaySettings {
@@ -65,16 +83,19 @@ interface IReadMoreLink {
   linkText: string;
   linkNewTab: boolean;
   include: boolean;
+  colorSettings: IColorSettings;
 }
 
 interface IWordPressRssFeedWebPartProps {
   feedFilterSettings: IWordPressFeedFilterSettings;
   displaySettings: IDisplaySettings;
+  colorSettings: IColorSettings;
   url: string;
 }
 
 interface IFeedRenderProps {
   displaySettings: IDisplaySettings;
+  colorSettings: IColorSettings;
   posts: Array<IWordPressPost>;
 }
 
@@ -155,7 +176,14 @@ interface IWordPressMediaItem {
   _links: IWordPressMediaLinks;
 }
 
+interface IPagination {
+  totalPages: number;
+  currentPage: number;
+  paginate: (pageNumber: number) => void;
+  colorSettings: IColorSettings;
+}
 export {
+  IPagination,
   IFeedRenderProps,
   IReadMoreLink,
   IWordPressRssFeedWebPartProps,
@@ -168,4 +196,5 @@ export {
   IWordPressPostEmbeddedData,
   IDisplaySettings,
   IPostsLayout,
+  IColorSettings,
 };
