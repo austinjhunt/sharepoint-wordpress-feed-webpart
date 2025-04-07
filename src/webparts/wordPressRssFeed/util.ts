@@ -1,11 +1,17 @@
-import { IPost, IWordPressFeedSettings, IReadMoreLink } from "./interfaces";
+import {
+  IWordPressPost,
+  IWordPressFeedFilterSettings,
+  IReadMoreLink,
+  IWordPressPostAuthor,
+  IWordPressMediaItem,
+  IWordPressPostEmbeddedData,
+} from "./interfaces";
 
-const fetchPostsWithAndFilters: (url: string, settings: IWordPressFeedSettings) => Promise<Array<IPost>> = async (
-  url,
-  settings,
-) => {
+const fetchPostsWithAndFilters: (
+  fetchUrl: string,
+  settings: IWordPressFeedFilterSettings,
+) => Promise<Array<IWordPressPost>> = async (fetchUrl, settings) => {
   try {
-    let fetchUrl = `${url}/wp-json/wp/v2/posts?per_page=${settings.numPosts}`;
     if (settings.tagIds.length > 0) fetchUrl += `&tags=${settings.tagIds.join(",")}`;
     if (settings.categoryIds.length > 0) fetchUrl += `&categories=${settings.categoryIds.join(",")}`;
     if (settings.pastDays) {
@@ -20,19 +26,18 @@ const fetchPostsWithAndFilters: (url: string, settings: IWordPressFeedSettings) 
   }
 };
 
-const fetchPostsWithOrFilters: (url: string, settings: IWordPressFeedSettings) => Promise<Array<IPost>> = async (
-  url,
-  settings,
-) => {
+const fetchPostsWithOrFilters: (
+  fetchUrl: string,
+  settings: IWordPressFeedFilterSettings,
+) => Promise<Array<IWordPressPost>> = async (fetchUrl, settings) => {
   try {
-    let fetchUrl = `${url}/wp-json/wp/v2/posts?per_page=${settings.numPosts}`;
     if (settings.pastDays) {
       const sinceDate = new Date();
       sinceDate.setDate(sinceDate.getDate() - settings.pastDays);
       fetchUrl += `&after=${sinceDate.toISOString()}`;
     }
-    const withTags: IPost[] = [];
-    const withCategories: IPost[] = [];
+    const withTags: IWordPressPost[] = [];
+    const withCategories: IWordPressPost[] = [];
     let tagsFilterUrl = fetchUrl;
     let categoriesFilterUrl = fetchUrl;
     // get post set matching tags filter
@@ -50,7 +55,7 @@ const fetchPostsWithOrFilters: (url: string, settings: IWordPressFeedSettings) =
       withCategories.push(...(await categoryFilterResponse.json()));
     }
 
-    const dedupedUnion = [...withTags, ...withCategories].reduce<IPost[]>((accum, post) => {
+    const dedupedUnion = [...withTags, ...withCategories].reduce<IWordPressPost[]>((accum, post) => {
       // Check if the post is already in the accumulator based on the post id
       if (!accum.some((item) => item.id === post.id)) {
         accum.push(post); // Add unique post to the accumulator
@@ -65,14 +70,32 @@ const fetchPostsWithOrFilters: (url: string, settings: IWordPressFeedSettings) =
   }
 };
 
-const fetchPosts: (url: string, settings: IWordPressFeedSettings) => Promise<Array<IPost>> = async (url, settings) => {
-  let posts: Array<IPost> = [];
+const getAuthorIfPresent: (embedded: IWordPressPostEmbeddedData) => IWordPressPostAuthor | undefined = (embedded) => {
+  if (embedded.author && embedded.author.length > 0) {
+    const author = embedded.author[0];
+    return {
+      id: author.id ? author.id : 0,
+      name: author.name ? author.name : "",
+      slug: author.slug ? author.slug : "",
+      link: author.link ? author.link : "",
+      avatar_urls: author.avatar_urls && "24" in author.avatar_urls ? author.avatar_urls : undefined,
+    };
+  }
+  return undefined;
+};
+
+const fetchPosts: (url: string, settings: IWordPressFeedFilterSettings) => Promise<Array<IWordPressPost>> = async (
+  url,
+  settings,
+) => {
+  let posts: Array<IWordPressPost> = [];
   if (!url || url === "") return posts;
   try {
+    const fetchUrl = `${url}/wp-json/wp/v2/posts?per_page=${settings.numPosts}&_embed=true`;
     if (settings.filterJoinOperator === "AND") {
-      posts = await fetchPostsWithAndFilters(url, settings);
+      posts = await fetchPostsWithAndFilters(fetchUrl, settings);
     } else {
-      posts = await fetchPostsWithOrFilters(url, settings);
+      posts = await fetchPostsWithOrFilters(fetchUrl, settings);
     }
 
     // filter with regex pattern and sort most to least recent
@@ -106,4 +129,18 @@ const readMoreLinkNotEmpty: (readMoreLink: IReadMoreLink) => boolean = (readMore
   return readMoreLink && readMoreLink.linkText.trim() !== "" && readMoreLink.linkUrl.trim() !== "";
 };
 
-export { readMoreLinkNotEmpty, fetchPostsWithAndFilters, fetchPostsWithOrFilters, fetchPosts, validateUrl };
+const getPostFeaturedMediaIfPresent: (featuredMedia: Array<IWordPressMediaItem>) => IWordPressMediaItem | undefined = (
+  featuredMedia,
+) => {
+  return featuredMedia && featuredMedia.length > 0 ? featuredMedia[0] : undefined;
+};
+
+export {
+  readMoreLinkNotEmpty,
+  fetchPostsWithAndFilters,
+  fetchPostsWithOrFilters,
+  fetchPosts,
+  validateUrl,
+  getAuthorIfPresent,
+  getPostFeaturedMediaIfPresent,
+};

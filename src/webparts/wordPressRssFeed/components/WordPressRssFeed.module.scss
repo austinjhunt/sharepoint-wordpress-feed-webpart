@@ -5,6 +5,7 @@
   padding: 1em;
   color: "[theme:bodyText, default: #323130]";
   color: var(--bodyText);
+
   &.teams {
     font-family: $ms-font-family-fallbacks;
   }
@@ -17,36 +18,43 @@
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
 .flexBoxJustifyEnd {
   justify-content: flex-end;
   margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
 }
+
 .marginYFormField {
   margin-top: 1rem;
   margin-bottom: 1rem;
-} 
+}
+
 .flexBasisFull {
   flex-basis: 100%;
 }
+
 .flexBasisHalf {
   flex-basis: 50%;
 }
 
 .alert {
   margin-top: 0.25rem;
-  margin-bottom: 1rem;  
+  margin-bottom: 1rem;
   padding: 0.6rem;
   border-radius: 4px;
-  color: black ; 
+  color: black;
 }
-.warning { 
-  background-color: rgb(251, 210, 143); 
+
+.warning {
+  background-color: rgb(251, 210, 143);
 }
-.success { 
-  background-color: rgb(167, 225, 171); 
+
+.success {
+  background-color: rgb(167, 225, 171);
 }
+
 .error {
   background-color: rgb(223, 170, 170);
 }
@@ -67,17 +75,18 @@
   max-width: 420px;
 }
 
-.links {
-  a {
-    text-decoration: none;
-    color: "[theme:link, default:#03787c]";
-    color: var(--link); // note: CSS Custom Properties support is limited to modern browsers only
+.links a,
+.readMore {
+  text-decoration: none;
+  font-weight: bold;
+  text-decoration: none;
+  color: "[theme:link, default:#03787c]";
+  color: var(--link); // note: CSS Custom Properties support is limited to modern browsers only
 
-    &:hover {
-      text-decoration: underline;
-      color: "[theme:linkHovered, default: #014446]";
-      color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
-    }
+  &:hover {
+    text-decoration: underline;
+    color: "[theme:linkHovered, default: #014446]";
+    color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
   }
 }
 
@@ -93,12 +102,6 @@
   margin-bottom: 16px;
 }
 
-.thumbnail {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
 
 .content {
   text-align: left;
@@ -107,25 +110,20 @@
 .title {
   font-size: 1.2rem;
   margin-bottom: 8px;
+  margin-top: 0;
 }
 
 .date {
   font-size: 0.9rem;
-  color: #777;
   margin-bottom: 10px;
 }
 
 .excerpt {
   font-size: 1rem;
-  color: #333;
   margin-bottom: 12px;
 }
 
-.readMore {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
-}
+
 
 .readMore:hover {
   text-decoration: underline;
@@ -134,43 +132,55 @@
 .gridContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 1rem;
   justify-content: center;
+
+  &>article {
+    width: 40%;
+  }
 }
 
 .listContainer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem;
 }
 
 /* Grid Post Styles */
 .gridPost {
-  width: calc(45% - 16px);
   display: flex;
   flex-direction: column;
   background: #fff;
   padding: 16px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.gridPost>img.thumbnail {
+  flex-basis: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
 /* List Post Styles */
 .listPost {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: top;
   background: #fff;
-  padding: 16px;
+  padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  gap: 1rem;
 }
 
-.listPost img {
-  width: 120px;
-  height: auto;
-  margin-right: 16px;
-  border-radius: 8px;
+.listPost>img.thumbnail {
+  max-height: 200px;
+  max-width: 30%;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 /* Responsive */
@@ -190,9 +200,67 @@
   }
 }
 
+.postAuthorContainer {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  justify-content: flex-start;
+  align-items: center;
+
+  img {
+    border-radius: 30%;
+    width: 30px;
+  }
+
+  a {
+    color: "[theme:link, default:#03787c]";
+    color: var(--link); // note: CSS Custom Properties support is limited to modern browsers only
+
+    &:hover {
+      text-decoration: underline;
+      color: "[theme:linkHovered, default: #014446]";
+      color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
+    }
+  }
+}
+
 .feedTitle {
   font-size: medium;
 }
-.feedDescription{
+
+.feedDescription {
   font-size: small;
+}
+
+
+/* Pagination */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 0;
+
+  button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: white;
+    color: "[theme:link, default:#03787c]";
+    color: var(--link);
+
+    &:hover {
+      text-decoration: underline;
+      color: white;
+      background-color: "[theme:link, default:#03787c]";
+      background-color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
+    }
+  }
+
+  .activePage {
+    background-color: "[theme:link, default:#03787c]";
+    color: white;
+    border-color: "[theme: themePrimary, default: #0078d7]";
+  }
 }

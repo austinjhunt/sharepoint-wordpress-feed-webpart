@@ -6,17 +6,21 @@ import styles from "./WordPressRssFeed.module.scss";
 import { readMoreLinkNotEmpty } from "../util";
 import ReadMoreLink from "./ReadMoreLink";
 
-const FeedRender: React.FC<IFeedRenderProps> = ({ title, description, readMoreLink, url, posts, layoutType }) => {
+const FeedRender: React.FC<IFeedRenderProps> = ({ posts, displaySettings }) => {
   return (
     <div>
-      {title.trim() !== "" && <h1 className={styles.feedTitle}>{title}</h1>}
-      {description.trim() !== "" && <p className={styles.feedDescription}>{description}</p>}
+      {displaySettings?.title?.trim() !== "" && <h1 className={styles.feedTitle}>{displaySettings.title}</h1>}
+      {displaySettings.description?.trim() !== "" && (
+        <p className={styles.feedDescription}>{displaySettings.description}</p>
+      )}
       {!posts || posts.length === 0 ? (
         <Alert type={"warning"} msg={MESSAGES.WARNING.noPostsToDisplay} />
       ) : (
-        <PostsLayout url={url} posts={posts} layoutType={layoutType} />
+        <PostsLayout posts={posts} displaySettings={displaySettings} />
       )}
-      {readMoreLink.include && readMoreLinkNotEmpty(readMoreLink) && <ReadMoreLink {...readMoreLink} />}
+      {displaySettings.readMoreLink.include && readMoreLinkNotEmpty(displaySettings.readMoreLink) && (
+        <ReadMoreLink {...displaySettings.readMoreLink} />
+      )}
     </div>
   );
 };
