@@ -5,21 +5,34 @@ import PostsLayout from "./PostsLayout";
 import styles from "./WordPressRssFeed.module.scss";
 import { readMoreLinkNotEmpty } from "../util";
 import ReadMoreLink from "./ReadMoreLink";
+import { extractDefaultColor } from "../util";
 
-const FeedRender: React.FC<IFeedRenderProps> = ({ posts, displaySettings }) => {
+const FeedRender: React.FC<IFeedRenderProps> = ({ posts, displaySettings, colorSettings }) => {
   return (
-    <div>
-      {displaySettings?.title?.trim() !== "" && <h1 className={styles.feedTitle}>{displaySettings.title}</h1>}
+    <div
+      style={{ backgroundColor: extractDefaultColor(colorSettings.mainBackgroundColor) }}
+      className={styles.feedContainer}
+    >
+      {displaySettings?.title?.trim() !== "" && (
+        <h1 style={{ color: extractDefaultColor(colorSettings.titleTextColor) }} className={styles.feedTitle}>
+          {displaySettings.title}
+        </h1>
+      )}
       {displaySettings.description?.trim() !== "" && (
-        <p className={styles.feedDescription}>{displaySettings.description}</p>
+        <p
+          style={{ color: extractDefaultColor(colorSettings.descriptionTextColor) }}
+          className={styles.feedDescription}
+        >
+          {displaySettings.description}
+        </p>
       )}
       {!posts || posts.length === 0 ? (
         <Alert type={"warning"} msg={MESSAGES.WARNING.noPostsToDisplay} />
       ) : (
-        <PostsLayout posts={posts} displaySettings={displaySettings} />
+        <PostsLayout posts={posts} displaySettings={displaySettings} colorSettings={colorSettings} />
       )}
       {displaySettings.readMoreLink.include && readMoreLinkNotEmpty(displaySettings.readMoreLink) && (
-        <ReadMoreLink {...displaySettings.readMoreLink} />
+        <ReadMoreLink {...displaySettings.readMoreLink} colorSettings={colorSettings} />
       )}
     </div>
   );

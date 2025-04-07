@@ -1,3 +1,4 @@
+import { IPropertyPaneDropdownOption } from "@microsoft/sp-property-pane";
 import {
   IWordPressPost,
   IWordPressFeedFilterSettings,
@@ -6,6 +7,7 @@ import {
   IWordPressMediaItem,
   IWordPressPostEmbeddedData,
 } from "./interfaces";
+import { colorPalette } from "./colorPalette";
 
 const fetchPostsWithAndFilters: (
   fetchUrl: string,
@@ -129,6 +131,27 @@ const readMoreLinkNotEmpty: (readMoreLink: IReadMoreLink) => boolean = (readMore
   return readMoreLink && readMoreLink.linkText.trim() !== "" && readMoreLink.linkUrl.trim() !== "";
 };
 
+function getColorDropdownOptions(): IPropertyPaneDropdownOption[] {
+  return Object.entries(colorPalette).map(
+    ([key, value]) =>
+      ({
+        key: `[theme:${key}, default: ${value}]`,
+        text: key,
+      } as IPropertyPaneDropdownOption),
+  );
+}
+
+function extractDefaultColor(themeString: string): string {
+  if (!themeString) {
+    return "";
+  }
+  const parts = themeString.split("default:");
+  if (parts.length > 1) {
+    return parts[1].replace("]", "").trim();
+  }
+  return themeString;
+}
+
 const getPostFeaturedMediaIfPresent: (featuredMedia: Array<IWordPressMediaItem>) => IWordPressMediaItem | undefined = (
   featuredMedia,
 ) => {
@@ -136,6 +159,8 @@ const getPostFeaturedMediaIfPresent: (featuredMedia: Array<IWordPressMediaItem>)
 };
 
 export {
+  extractDefaultColor,
+  getColorDropdownOptions,
   readMoreLinkNotEmpty,
   fetchPostsWithAndFilters,
   fetchPostsWithOrFilters,

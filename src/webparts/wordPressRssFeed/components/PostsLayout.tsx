@@ -2,7 +2,8 @@ import * as React from "react";
 import styles from "./WordPressRssFeed.module.scss";
 import Post from "./Post";
 import { IPostsLayout } from "../interfaces"; // Assuming IPost is defined
-const PostsLayout: React.FC<IPostsLayout> = ({ posts, displaySettings }) => {
+import Pagination from "./Pagination";
+const PostsLayout: React.FC<IPostsLayout> = ({ posts, displaySettings, colorSettings }) => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = displaySettings.itemsPerPage || 5; // Default to 5 if not provided
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -24,20 +25,10 @@ const PostsLayout: React.FC<IPostsLayout> = ({ posts, displaySettings }) => {
     <div>
       <div className={displaySettings.layoutType === "grid" ? styles.gridContainer : styles.listContainer}>
         {currentItems.map((post, index) => (
-          <Post key={index} post={post} displaySettings={displaySettings} />
+          <Post key={index} post={post} displaySettings={displaySettings} colorSettings={colorSettings} />
         ))}
       </div>
-      <div className={styles.pagination}>
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-          <button
-            key={pageNumber}
-            onClick={() => paginate(pageNumber)}
-            className={currentPage === pageNumber ? styles.activePage : ""}
-          >
-            {pageNumber}
-          </button>
-        ))}
-      </div>
+      <Pagination currentPage={currentPage} paginate={paginate} colorSettings={colorSettings} totalPages={totalPages} />
     </div>
   );
 };

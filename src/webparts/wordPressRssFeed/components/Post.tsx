@@ -2,11 +2,11 @@ import * as React from "react";
 import styles from "./WordPressRssFeed.module.scss";
 import { IWordPressPostAuthor, IPostComponent, IWordPressMediaItem } from "../interfaces";
 import { Link } from "@fluentui/react";
+import { extractDefaultColor } from "../util";
 
-const Post: React.FC<IPostComponent> = ({ post, displaySettings }) => {
+const Post: React.FC<IPostComponent> = ({ post, displaySettings, colorSettings }) => {
   const [media, setMedia] = React.useState<IWordPressMediaItem | undefined>(undefined);
   const [author, setAuthor] = React.useState<IWordPressPostAuthor | undefined>(undefined);
-  console.log(post);
   React.useEffect(() => {
     if (post && post._embedded && post._embedded["wp:featuredmedia"] && post._embedded["wp:featuredmedia"].length > 0) {
       setMedia(post._embedded["wp:featuredmedia"][0]);
@@ -52,7 +52,10 @@ const Post: React.FC<IPostComponent> = ({ post, displaySettings }) => {
   };
 
   return (
-    <article className={displaySettings.layoutType === "grid" ? styles.gridPost : styles.listPost}>
+    <article
+      style={{ backgroundColor: extractDefaultColor(colorSettings.postBackgroundColor) }}
+      className={displaySettings.layoutType === "grid" ? styles.gridPost : styles.listPost}
+    >
       {displaySettings.showMedia && media && mediaHasAllData() && (
         <img
           id={media.id.toString()}
@@ -64,11 +67,15 @@ const Post: React.FC<IPostComponent> = ({ post, displaySettings }) => {
         />
       )}
       <div className={styles.content}>
-        {post.title && <h2 className={styles.title}>{post.title.rendered}</h2>}
+        {post.title && (
+          <h2 style={{ color: extractDefaultColor(colorSettings.postTitleTextColor) }} className={styles.title}>
+            {post.title.rendered}
+          </h2>
+        )}
         {displaySettings.showAuthor && author && authorHasAllData() && (
           <div className={styles.postAuthorContainer}>
             <img src={author.avatar_urls?.["24"]} alt={`avatar for ${author.name}`} />
-            <p>
+            <p style={{ color: extractDefaultColor(colorSettings.postBodyTextColor) }}>
               Published by{" "}
               <Link href={author.link} target={"_blank"}>
                 {author.name}
@@ -76,9 +83,21 @@ const Post: React.FC<IPostComponent> = ({ post, displaySettings }) => {
             </p>
           </div>
         )}
-        <p className={styles.date}>{formattedDate}</p>
-        {displaySettings.excerptLength !== 0 && <p className={styles.excerpt}>{extractText(post.excerpt.rendered)}</p>}
-        <a href={post.link} target="_blank" rel="noopener noreferrer" className={styles.readMore}>
+        <p style={{ color: extractDefaultColor(colorSettings.postBodyTextColor) }} className={styles.date}>
+          {formattedDate}
+        </p>
+        {displaySettings.excerptLength !== 0 && (
+          <p style={{ color: extractDefaultColor(colorSettings.postBodyTextColor) }} className={styles.excerpt}>
+            {extractText(post.excerpt.rendered)}
+          </p>
+        )}
+        <a
+          style={{ color: extractDefaultColor(colorSettings.postReadMoreLinkTextColor) }}
+          href={post.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.readMore}
+        >
           Read More →
         </a>
       </div>

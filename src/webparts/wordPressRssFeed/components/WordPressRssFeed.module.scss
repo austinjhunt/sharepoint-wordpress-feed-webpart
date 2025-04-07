@@ -11,6 +11,11 @@
   }
 }
 
+.feedContainer {
+  padding: 1rem;
+}
+
+
 .flexW100Container {
   display: flex;
   justify-content: space-between;
@@ -33,6 +38,10 @@
 
 .flexBasisFull {
   flex-basis: 100%;
+}
+
+.flexBasis80 {
+  flex-basis: 80%;
 }
 
 .flexBasisHalf {
@@ -263,4 +272,10 @@
     color: white;
     border-color: "[theme: themePrimary, default: #0078d7]";
   }
+}
+
+.colorPreview {
+  width: 30px;
+  height: 30px;
+  border: 1px solid gray;
 }
