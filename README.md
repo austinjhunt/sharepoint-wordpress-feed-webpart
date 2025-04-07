@@ -13,41 +13,11 @@ This SharePoint Framework (SPFx) Web Part allows you to fetch and display posts 
 - 📃 Fully integrated with Fluent UI for a responsive SharePoint look and feel
 
 
-## 🛠️ Usage
-Once the Web Part is added to a page:
+## 🛠️ Usage Demo - Screen Recording
 
-1. Enter your WordPress site URL (e.g. https://example.com)
-2. Fetch site information (will fail if feed is not available). Once site information is fetched you can:
-3. Set limits: # posts, # days back
-4. Select desired tags or categories to filter by. **These are multiselect dropdowns populated from your site's available tags and categories.**
-5. Optionally enter a regular expression to filter post titles. 
-6. Choose AND or OR to define how tag/category filters combine.
-7. Choose your layout: List | Grid -- **Note here that images will only display if the parent post has associated media**
-8. Click Update Feed.
-9. Use Clear Filters to reset everything.
 
-## 📸 Demo Screenshots
-### Basic Settings (feed title, description, link)
-![Basic settings](./doc/img/basic-settings.png)
+https://github.com/user-attachments/assets/576fcbac-8c7a-4430-a8da-5e6e97aec5ac
 
-### WordPress Site URL (to pull the feed)
-![Provide WordPress Site URL](./doc/img/site-url.png)
-
-### Connect to the site and fetch its info (tags, categories, etc.). Choose feed settings.
-![Connect to site](./doc/img/connected.png)
-
-###  Save those settings!
-![Settings saved](./doc/img/settings-saved.png)
-
-###  View your feed! 
-![Feed preview](./doc/img/preview-1.png)
-
-### Test your link if you configured one!
-![Test your read more link](./doc/img/preview-link.png)
-
-## Used SharePoint Framework Version
-
-![version](https://img.shields.io/badge/version-1.20.0-green.svg)
 
 ## Applies to
 
