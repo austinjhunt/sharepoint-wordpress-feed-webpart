@@ -1,6 +1,6 @@
-# SharePoint Framework (SPFx) WordPress-Specific RSS Feed Web Part
+# SharePoint Framework (SPFx) WordPress News Feed Web Part
 
-This SharePoint Framework (SPFx) Web Part allows you to fetch and display posts from a WordPress site's RSS feed using the WordPress REST API. Users can filter posts by tags, categories, post title patterns, and date ranges. This component is ideal for SharePoint environments that need to embed dynamic blog content from a WordPress site.
+This SharePoint Framework (SPFx) Web Part allows you to fetch and display posts from a WordPress site as a highly configurable news feed using the WordPress REST API. Users can filter posts by tags, categories, post title patterns, and date ranges. This component is ideal for SharePoint environments that need to embed dynamic blog content from a WordPress site.
 
 ## ✨ Features
 
@@ -23,15 +23,13 @@ https://github.com/user-attachments/assets/576fcbac-8c7a-4430-a8da-5e6e97aec5ac
 
 - [SharePoint Framework](https://aka.ms/spfx)
 - [Microsoft 365 tenant](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-
-> Get your own free development tenant by subscribing to [Microsoft 365 developer program](http://aka.ms/o365devprogram)
+- Get your own free development tenant by subscribing to [Microsoft 365 developer program](http://aka.ms/o365devprogram)
 
 ## Prerequisites
 
 ### For using: 
-
-> Have a Wordpress site in mind that allows access to the /wp-json path for RSS feed consumption
-> Have a SharePoint Online site
+- Have a Wordpress site in mind that allows access to the /wp-json path for post consumption
+- Have a SharePoint Online site
 
 ### For developing:  
 
@@ -43,7 +41,7 @@ https://github.com/user-attachments/assets/576fcbac-8c7a-4430-a8da-5e6e97aec5ac
 
 | Solution    | Author(s)                                               |
 | ----------- | ------------------------------------------------------- |
-| sharepoint-wordpress-rss-feed | Austin Hunt, austinjhunt.com |
+| sharepoint-wordpress-news-feed | Austin Hunt, austinjhunt.com |
 
 ## Version history
 
