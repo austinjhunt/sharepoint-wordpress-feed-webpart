@@ -3,7 +3,7 @@ import { IWordPressUrlField } from "./IWordPressUrlField";
 import { PrimaryButton, TextField } from "@fluentui/react";
 import { Alert, MESSAGES } from "../../components/Alert";
 import { validateUrl } from "../../util";
-import styles from "../../components/WordPressRssFeed.module.scss";
+import styles from "../../components/WordPressFeed.module.scss";
 
 const WordPressUrlField: React.FC<IWordPressUrlField> = (props) => {
   const [urlState, setUrlState] = React.useState<string>(props.value);

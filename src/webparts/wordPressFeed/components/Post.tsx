@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./WordPressRssFeed.module.scss";
+import styles from "./WordPressFeed.module.scss";
 import { IWordPressPostAuthor, IPostComponent, IWordPressMediaItem } from "../interfaces";
 import { Link } from "@fluentui/react";
 import { extractDefaultColor } from "../util";

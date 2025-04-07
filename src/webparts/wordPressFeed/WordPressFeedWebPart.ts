@@ -11,8 +11,8 @@ import {
 } from "@microsoft/sp-property-pane";
 import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
-import WordPressRssFeed from "./components/WordPressRssFeed";
-import { ITagOrCategory, IWordPressRssFeedWebPartProps } from "./interfaces";
+import WordPressFeed from "./components/WordPressFeed";
+import { ITagOrCategory, IWordPressFeedWebPartProps } from "./interfaces";
 import { defaultColorSettings, defaultDisplaySettings, defaultFeedRequestSettings } from "./defaults";
 import { filterJoinOperators, layouts } from "./dropdownOptions";
 import { PropertyPaneWordPressUrlField } from "./controls/WordPressUrlField/PropertyPaneWordPressUrlField";
@@ -20,7 +20,7 @@ import { getColorDropdownOptions, validateUrl } from "./util";
 import { PropertyPaneNumericTextField } from "./controls/NumericTextField/PropertyPaneNumericTextField";
 import { PropertyPaneThemePaletteColorPicker } from "./controls/ThemePaletteColorPicker/PropertyPaneNumericTextField";
 import { IDropdownOption } from "@fluentui/react";
-export default class WordPressRssFeedWebPart extends BaseClientSideWebPart<IWordPressRssFeedWebPartProps> {
+export default class WordPressFeedWebPart extends BaseClientSideWebPart<IWordPressFeedWebPartProps> {
   // store data that you need to fetch asynchronously within
   // configuration panel as private variables, and load them
   // onInit.
@@ -29,7 +29,7 @@ export default class WordPressRssFeedWebPart extends BaseClientSideWebPart<IWord
   private _colorOptions: IPropertyPaneDropdownOption[] = [];
   private _siteName: string = "";
   public render(): void {
-    const element: React.ReactElement<IWordPressRssFeedWebPartProps> = React.createElement(WordPressRssFeed, {
+    const element: React.ReactElement<IWordPressFeedWebPartProps> = React.createElement(WordPressFeed, {
       displaySettings: this.properties.displaySettings,
       feedFilterSettings: this.properties.feedFilterSettings,
       colorSettings: this.properties.colorSettings,

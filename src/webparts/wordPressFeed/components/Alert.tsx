@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./WordPressRssFeed.module.scss";
+import styles from "./WordPressFeed.module.scss";
 
 interface AlertProps {
   msg: string;
@@ -17,7 +17,7 @@ const MESSAGES = {
     noPostsToDisplay: "There are no posts to display currently",
     provideSiteUrl: "Please provide a valid site URL.",
     failedSiteInfoFetch: "Failed to fetch site information. Please try updating your site URL.",
-    failedToFetchFeed: "Failed to fetch the RSS feed. Please try updating your site URL.",
+    failedToFetchFeed: "Failed to fetch the feed. Please try updating your site URL.",
   },
 };
 const Alert: (props: AlertProps) => JSX.Element = (props: AlertProps) => {

@@ -8,12 +8,12 @@
       "@microsoft/teams-js": "2.24.0"
     },
     "version": "1.20.0",
-    "libraryName": "sharepoint-wordpress-rss-feed",
+    "libraryName": "sharepoint-wordpress-news-feed",
     "libraryId": "cb04c1be-2cd9-44aa-aadb-2565f1760c25",
     "environment": "spo",
     "packageManager": "npm",
-    "solutionName": "sharepoint-wordpress-rss-feed",
-    "solutionShortDescription": "sharepoint-wordpress-rss-feed description",
+    "solutionName": "sharepoint-wordpress-news-feed",
+    "solutionShortDescription": "display a wordpress news feed",
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
     "componentType": "webpart"

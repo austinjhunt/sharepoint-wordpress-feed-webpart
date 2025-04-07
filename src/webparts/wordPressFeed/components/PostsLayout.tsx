@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./WordPressRssFeed.module.scss";
+import styles from "./WordPressFeed.module.scss";
 import Post from "./Post";
 import { IPostsLayout } from "../interfaces"; // Assuming IPost is defined
 import Pagination from "./Pagination";
