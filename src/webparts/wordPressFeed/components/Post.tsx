@@ -40,6 +40,11 @@ const Post: React.FC<IPostComponent> = ({ post, displaySettings, colorSettings }
     return doc.body.textContent?.slice(0, displaySettings.excerptLength) + "..." || "";
   };
 
+  const decodeHtml = (html: string): string => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.documentElement.textContent || "";
+  };
+
   const mediaHasAllData: () => boolean = () => {
     return (
       media !== undefined &&
@@ -61,7 +66,7 @@ const Post: React.FC<IPostComponent> = ({ post, displaySettings, colorSettings }
           id={media.id.toString()}
           className={styles.thumbnail}
           src={media.source_url}
-          alt={media.title.rendered}
+          alt={decodeHtml(media.title.rendered)}
           width={media.media_details.width}
           height={media.media_details.height}
         />
@@ -69,7 +74,7 @@ const Post: React.FC<IPostComponent> = ({ post, displaySettings, colorSettings }
       <div className={styles.content}>
         {post.title && (
           <h2 style={{ color: extractDefaultColor(colorSettings.postTitleTextColor) }} className={styles.title}>
-            {post.title.rendered}
+            {decodeHtml(post.title.rendered)}
           </h2>
         )}
         {displaySettings.showAuthor && author && authorHasAllData() && (
@@ -78,7 +83,7 @@ const Post: React.FC<IPostComponent> = ({ post, displaySettings, colorSettings }
             <p style={{ color: extractDefaultColor(colorSettings.postBodyTextColor) }}>
               Published by{" "}
               <Link href={author.link} target={"_blank"}>
-                {author.name}
+                {decodeHtml(author.name)}
               </Link>
             </p>
           </div>
